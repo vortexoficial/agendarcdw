@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet"> <!-- Incluindo a Montserrat ExtraBold -->
+    <title>Agenda de Eventos</title>
+    <style>
+        /* Reset and general styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background-color: rgb(244, 239, 229); /* Cor de fundo bege */
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Centralizing content */
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            max-width: 1600px; /* Aumentei a largura do quadro branco no desktop */
+            padding: 0 20px;
+            margin-top: 0; /* Colocando o quadro branco colado no topo */
+            margin-bottom: 0; /* Colocando o quadro branco colado no rodapé */
+        }
+
+        /* First event - includes logo and header text */
+        .first-event {
+            background-color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 0; /* Colocando o quadro branco colado no topo */
+            margin-bottom: 0; /* Removido o espaço entre o quadro branco e o rodapé */
+        }
+
+        .logo-desktop {
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 900px; /* Tamanho da logo para desktop */
+        }
+
+        .logo-mobile {
+            display: none;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .header-text {
+            font-size: 1.5em;
+            margin-top: 20px;
+            font-weight: normal;
+        }
+
+        /* Event section styles */
+        .events {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background-color: #fff; /* Fundo branco para os eventos */
+            padding: 20px;
+            padding-left: 160px; /* Adicionando margem interna de 160px à esquerda */
+            padding-right: 160px; /* Adicionando margem interna de 160px à direita */
+        }
+
+        .event {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 20px;
+            position: relative;
+            border-bottom: 1px solid #000; /* Linha de separação entre eventos com espessura menor */
+        }
+
+        .event-left {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .event-header {
+            display: flex;
+            align-items: center;
+            background-color: #000;
+            color: #fff;
+            padding: 10px 15px;
+            position: relative;
+            width: 100%; /* Faixa preta vai até a direita no mobile */
+        }
+
+        .event-header h2 {
+            font-size: 1.5em;
+            margin-left: 15px;
+            flex: 1;
+            font-weight: 700; /* Fonte Bold para o título do evento */
+        }
+
+        .event-header::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 15px;
+            height: 100%;
+            background-color: rgb(226, 6, 20); /* Tom de vermelho alterado */
+        }
+
+        .event-info {
+            margin-top: 10px;
+            line-height: 1.5;
+            font-weight: 500; /* Fonte Medium para a descrição do evento */
+        }
+
+        .event-right {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            max-width: 200px;
+        }
+
+        .event-date {
+            margin-bottom: 10px;
+        }
+
+        .event-date .event-day {
+            font-size: 5em; /* Aumentei o tamanho da data */
+            color: rgb(226, 6, 20); /* Novo tom de vermelho */
+            font-weight: 900; /* Aplicando a fonte Montserrat ExtraBold para a data */
+        }
+
+        .event-date .event-month,
+        .event-date .event-time {
+            font-size: 1.5em; /* Aumentando o tamanho da fonte do mês e horário */
+            color: #000;
+        }
+
+        /* Button styles */
+        button {
+            background-color: rgb(226, 6, 20); /* Novo tom de vermelho */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            width: auto;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Efeito de zoom */
+            position: relative;
+            margin-top: 10px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #000; /* Fica preto */
+            color: white; /* Texto branco */
+            transform: scale(1.1); /* Zoom no botão */
+        }
+
+        /* Line separator between events */
+        .event:not(:last-child) {
+            border-bottom: 1px solid #000; /* Diminuindo a espessura da linha entre os eventos */
+        }
+
+        /* Responsive styles for mobile */
+        @media (max-width: 768px) {
+            .logo-desktop {
+                display: none;
+            }
+
+            .logo-mobile {
+                display: block;
+                margin: 0 auto;
+                max-width: 330px; /* Logo do mobile agora aparece corretamente */
+            }
+
+            .events {
+                flex-direction: column;
+                padding-left: 0; /* Remover margem interna no mobile */
+                padding-right: 0; /* Remover margem interna no mobile */
+                align-items: center; /* Centralizando o conteúdo */
+            }
+
+            .event {
+                flex-direction: column;
+                width: 100%;
+                align-items: center; /* Centralizando o conteúdo dentro de cada evento */
+            }
+
+            .event-info {
+                text-align: center; /* Centralizando a descrição do evento no mobile */
+            }
+
+            .event-right {
+                align-items: center;
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            button {
+                width: 100%;
+                align-self: center;
+            }
+
+            /* Criando a div para a faixa preta do tamanho do quadro branco */
+            .event-header-mobile {
+                width: 100%;
+                background-color: #000;
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                z-index: -1; /* Coloca atrás do conteúdo do evento */
+            }
+
+            .event-header {
+                position: relative;
+                z-index: 1;
+            }
+
+            .event-header h2 {
+                text-align: center; /* Centraliza o título no mobile */
+            }
+
+            /* Mobile-specific layout adjustments */
+            .container {
+                padding-left: 20px; /* Remover margens laterais no mobile */
+                padding-right: 20px; /* Remover margens laterais no mobile */
+            }
+
+            .first-event {
+                margin-top: 0; /* Remover margem entre o topo e a logo no mobile */
+            }
+        }
+
+        /* Styles for desktop */
+        @media (min-width: 769px) {
+            /* Desktop adjustments */
+            .container {
+                padding-left: 160px; /* Adicionando margem de 160px à esquerda no desktop */
+                padding-right: 160px; /* Adicionando margem de 160px à direita no desktop */
+            }
+
+            .first-event {
+                margin-top: 0; /* Removendo a margem no topo do desktop */
+            }
+
+            .events {
+                padding-left: 160px; /* Adicionando margem interna de 160px à esquerda */
+                padding-right: 160px; /* Adicionando margem interna de 160px à direita */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- First event with logo and header text -->
+        <div class="first-event"><br><br><br>
+            <img src="img/logomobile.png" alt="Logo Mobile" class="logo-mobile"> <!-- Logo no mobile -->
+            <img src="img/logodesktop.png" alt="Logo Desktop" class="logo-desktop">
+            <div class="header-text">Escolha seu dia e horário</div>
+        </div>
+
+        <!-- Events -->
+        <section class="events">
+            <div class="event">
+                <div class="event-left">
+                    <div class="event-header">
+                        <h2>Kyowa </h2>
+                    </div>
+                    <div class="event-info">
+                        <p>4 HOUR PLAY TIME LIVE DJ</p>
+                        <p>2 HIGH POWERED SPEAKERS</p>
+                        <p>2 HOURS SETUP AND TEARDOWN</p>
+                        <p>DJ BOOTH</p>
+                    </div>
+                </div>
+
+                <div class="event-right">
+                    <div class="event-date">
+                        <p class="event-day">13</p>
+                        <p class="event-month">OUTUBRO</p>
+                        <p class="event-time">19h</p>
+                    </div>
+                    <button>Inscreva-se</button>
+                </div>
+            </div>
+
+            <div class="event">
+                <div class="event-left">
+                    <div class="event-header">
+                        <h2>Dilma Coisas da Casa</h2>
+                    </div>
+                    <div class="event-info">
+                        <p>UPLIGHTING</p>
+                        <p>MC SERVICES</p>
+                        <p>2 MICROPHONES</p>
+                        <p>2 ADDITIONAL SPEAKERS</p>
+                    </div>
+                </div>
+
+                <div class="event-right">
+                    <div class="event-date">
+                        <p class="event-day">14</p>
+                        <p class="event-month">OUTUBRO</p>
+                        <p class="event-time">17h às 20h</p>
+                    </div>
+                    <button>Inscreva-se</button>
+                </div>
+            </div>
+
+            <div class="event">
+                <div class="event-left">
+                    <div class="event-header">
+                        <h2>Pura Água e Ar</h2>
+                    </div>
+                    <div class="event-info">
+                        <p>DANCE FLOOR LIGHTING</p>
+                        <p>CUSTOM LOGO PROJECTION</p>
+                        <p>2 ADDITIONAL HOURS</p>
+                        <p>FOG + LASERS + VISUAL EFFECTS</p>
+                    </div>
+                </div>
+
+                <div class="event-right">
+                    <div class="event-date">
+                        <p class="event-day">14</p>
+                        <p class="event-month">OUTUBRO</p>
+                        <p class="event-time">17h</p>
+                    </div>
+                    <button>Inscreva-se</button>
+                </div>
+            </div>
+
+            <div class="event">
+                <div class="event-left">
+                    <div class="event-header">
+                        <h2>LL Vidros</h2>
+                    </div>
+                    <div class="event-info">
+                        <p>DANCE FLOOR LIGHTING</p>
+                        <p>CUSTOM LOGO PROJECTION</p>
+                        <p>2 ADDITIONAL HOURS</p>
+                        <p>FOG + LASERS + VISUAL EFFECTS</p>
+                    </div>
+                </div>
+
+                <div class="event-right">
+                    <div class="event-date">
+                        <p class="event-day">15</p>
+                        <p class="event-month">OUTUBRO</p>
+                        <p class="event-time">09h</p>
+                    </div>
+                    <button>Inscreva-se</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
