@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet"> <!-- Incluindo a Montserrat ExtraBold -->
     <title>Agenda de Eventos</title>
+     <!-- Favicon -->
+    <link rel="icon" href="img/favicon.png" type="image/png">
     <style>
         /* Reset and general styles */
+        
         * {
             margin: 0;
             padding: 0;
@@ -19,9 +22,10 @@
             color: #000;
             margin: 0;
             padding: 0;
+            overflow-x: hidden; /* Evita o scroll horizontal */
         }
 
-        /* Centralizing content */
+        /* Centralizando o conteúdo */
         .container {
             width: 100%;
             margin: 0 auto;
@@ -31,28 +35,141 @@
             margin-bottom: 0; /* Colocando o quadro branco colado no rodapé */
         }
 
-        /* First event - includes logo and header text */
+        /* Primeira seção com logo e texto */
+        .new-section {
+            display: block; /* Por padrão, as divs são blocos no desktop */
+            padding: 40px 20px;
+            background-color: rgb(244, 239, 229); /* Atualizado para a cor RGB(244, 239, 229) */
+            margin-top: 40px;
+        }
+
+        /* Quando no mobile, as divs ficam em coluna */
+        @media (max-width: 768px) {
+            .new-section {
+                display: block; /* Mantém as divs em bloco no mobile */
+            }
+
+            .new-section-right {
+                display: flex;
+                flex-direction: column-reverse; /* Inverte a ordem dos itens no mobile */
+                margin-bottom: 20px; /* Adiciona um espaço abaixo do banner */
+            }
+
+            /* Centraliza o conteúdo */
+            .new-section-left {
+                text-align: center;
+            }
+
+            /* Quando no mobile, o botão ficará abaixo do banner */
+            .button-agenda {
+                margin-top: 20px; /* Adicionando um espaçamento para o botão ficar abaixo do banner */
+            }
+
+            /* Estilo para o mobile */
+@media (max-width: 768px) {
+    .subscribe-text {
+        display: block !important; /* Garante que o texto seja tratado como um bloco */
+        width: 100% !important; /* A largura do elemento será de 100% */
+        text-align: center !important; /* Alinha o texto no centro */
+        margin: 0 auto !important; /* Garante que o elemento é centralizado */
+    }
+}
+
+        
+
+            /* Quebra a linha no mobile */
+            .break-line {
+                display: block; /* Força a quebra de linha apenas no mobile */
+            }
+        }
+
+        /* Quando no desktop, as divs ficam lado a lado */
+        @media (min-width: 769px) {
+            .new-section {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap; /* Permite que as divs fiquem lado a lado */
+            }
+        }
+
+        .new-section-left {
+            flex: 1;
+            padding: 20px;
+            text-align: left; /* Alinhando o texto à esquerda */
+        }
+
+        .new-section-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .logo {
+            max-width: 600px; /* Logo no desktop com 600px de largura */
+            margin-bottom: 20px; /* Adicionando um espaço abaixo da logo */
+        }
+
+        .section-text p {
+            font-size: 2em; /* Aumentei o tamanho da fonte */
+            margin-bottom: 10px;
+        }
+
+        .section-text p strong {
+            font-weight: 900; /* Adicionando negrito para a frase "Rede Conceito Design Week" */
+        }
+
+        .section-text button {
+            background-color: #000; /* Alterado para preto */
+            color: white;
+            border: none;
+            padding: 20px 40px; /* Ajustei o tamanho do botão para ser maior que o texto */
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-top: 20px;
+            border-radius: 0; /* Removendo arredondamento das bordas */
+            width: auto;
+            white-space: nowrap; /* Impede quebra de linha no botão */
+        }
+
+        .section-text button:hover {
+            background-color: #333; /* Alterado para um tom mais escuro ao passar o mouse */
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .banner-image {
+            width: 100%;
+            height: auto;
+        }
+
+        .section-text .subtext {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+
+        /* Estilos da Agenda */
         .first-event {
             background-color: #fff;
-            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 0; /* Colocando o quadro branco colado no topo */
-            margin-bottom: 0; /* Removido o espaço entre o quadro branco e o rodapé */
+            margin-top: 0;
+            margin-bottom: 0;
         }
 
         .logo-desktop {
             display: block;
             margin: 0 auto;
             width: 100%;
-            max-width: 900px; /* Tamanho da logo para desktop */
+            max-width: 900px; /* Logo no desktop ajustada para 600px */
         }
 
         .logo-mobile {
             display: none;
             width: 100%;
-            max-width: 300px;
+            max-width: 300px; /* Logo mobile ajustada para 150px */
         }
 
         .header-text {
@@ -61,15 +178,14 @@
             font-weight: normal;
         }
 
-        /* Event section styles */
         .events {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            background-color: #fff; /* Fundo branco para os eventos */
+            background-color: #fff;
             padding: 20px;
-            padding-left: 160px; /* Adicionando margem interna de 160px à esquerda */
-            padding-right: 160px; /* Adicionando margem interna de 160px à direita */
+            padding-left: 160px;
+            padding-right: 160px;
         }
 
         .event {
@@ -78,7 +194,7 @@
             justify-content: space-between;
             padding: 20px;
             position: relative;
-            border-bottom: 1px solid #000; /* Linha de separação entre eventos com espessura menor */
+            border-bottom: 1px solid #000;
         }
 
         .event-left {
@@ -172,16 +288,52 @@
             border-bottom: 1px solid #000; /* Diminuindo a espessura da linha entre os eventos */
         }
 
+        /* Linha vermelha abaixo do botão */
+        .line-red {
+            height: 20px;
+            background-color: rgb(226, 6, 20); /* Linha vermelha */
+            margin-top: 20px;
+        }
+
+        /* Frase abaixo da linha vermelha */
+        .subscribe-text {
+            text-align: left; /* Alinha à esquerda no desktop */
+            font-size: 1em; /* Diminuí o tamanho da fonte para 1em */
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
         /* Responsive styles for mobile */
         @media (max-width: 768px) {
+            /* Remover margens laterais no mobile */
+            .container {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
             .logo-desktop {
-                display: none;
+                display: none; /* Esconde a logo do desktop no mobile */
             }
 
             .logo-mobile {
                 display: block;
                 margin: 0 auto;
-                max-width: 330px; /* Logo do mobile agora aparece corretamente */
+                max-width: 300px; /* Logo ajustada para 150px no mobile */
+            }
+
+            .new-section-left {
+                text-align: center; /* Centraliza o conteúdo */
+                padding: 10px 0; /* Ajusta o padding para o mobile */
+                width: 100%; /* Garante que não haja overflow para a direita */
+            }
+
+            .section-text p {
+                font-size: 1.2em; /* Reduz o tamanho da fonte no mobile */
+            }
+
+            .section-text button {
+                font-size: 13px; /* Diminuir o tamanho da fonte do botão */
+                padding: 10px 20px; /* Ajusta o tamanho do botão */
             }
 
             .events {
@@ -210,9 +362,28 @@
             button {
                 width: 100%;
                 align-self: center;
+                font-size: 1em; /* Diminui o tamanho da fonte no botão no mobile */
+                padding: 15px 40px; /* Botão maior que o texto */
             }
 
-            /* Criando a div para a faixa preta do tamanho do quadro branco */
+            /* Corrige a exibição da logo e do banner no mobile */
+            .new-section-right .banner-image {
+                display: none;
+            }
+
+            /* Banner mobile agora exibido no mobile */
+            .new-section-right img.banner-mobile {
+                display: block;
+                margin: 0 auto;
+                width: 90%; /* Aumenta o tamanho do banner mobile */
+                margin-bottom: 20px; /* Adiciona um espaço abaixo do banner */
+            }
+
+            /* Corrige o tamanho da logo da segunda sessão */
+            .logo-desktop {
+                max-width: 300px; /* Ajustando a logo da segunda sessão para 300px no mobile */
+            }
+
             .event-header-mobile {
                 width: 100%;
                 background-color: #000;
@@ -259,26 +430,62 @@
                 padding-left: 160px; /* Adicionando margem interna de 160px à esquerda */
                 padding-right: 160px; /* Adicionando margem interna de 160px à direita */
             }
+
+            /* Ajustando tamanho do banner desktop */
+            .banner-desktop {
+                width: 400px; /* Diminuindo ainda mais o tamanho do banner desktop */
+                display: block;
+            }
+
+            /* Banner Mobile */
+            .banner-mobile {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- First event with logo and header text -->
-        <div class="first-event"><br><br><br>
-            <img src="img/logomobile.png" alt="Logo Mobile" class="logo-mobile"> <!-- Logo no mobile -->
-            <img src="img/logodesktop.png" alt="Logo Desktop" class="logo-desktop">
-            <div class="header-text">Escolha seu dia e horário</div>
-        </div>
+        <!-- Nova Seção -->
+        <section class="new-section">
+            <div class="new-section-left">
+                <img src="img/logo.png" alt="Logo Desktop" class="logo-desktop"> <!-- Logo no desktop -->
+                <img src="img/logomobile2.png" alt="Logo Mobile" class="logo-mobile"> <!-- Logo Mobile -->
+                <div class="section-text"><br><br>
+                    <p>Venha aprender, conectar e<br>se inspirar com quem ama<br>design como você!
+                    <br><strong>Rede Conceito Design Week</strong>
+                    <br>Onde conhecimento vira conexão!</p>
+                    <button class="button-agenda">CONFIRA A AGENDA DOS EVENTOS</button>
+                </div><br>
+                <!-- Linha vermelha abaixo do botão -->
+                <div class="line-red"></div>
+<br>
+                <!-- Frase abaixo da linha vermelha -->
+                <div class="subscribe-text">
+                    INSCREVA-SE GRÁTIS: WWW.REDECONCEITOBR.COM.BR
+                </div>
+            </div><br>
+            <div class="new-section-right">
+                <img src="img/banner.png" alt="Banner Desktop" class="banner-image banner-desktop"> <!-- Banner Desktop -->
+                <img src="img/bannermobile.png" alt="Banner Mobile" class="banner-image banner-mobile"> <!-- Banner Mobile -->
+            </div>
+        </section>
 
         <!-- Events -->
         <section class="events">
+            <!-- First event with logo and header text -->
+            <div class="first-event"><br><br><br>
+                <img src="img/logomobile.png" alt="Logo Mobile" class="logo-mobile">
+                <img src="img/logodesktop.png" alt="Logo Desktop" class="logo-desktop">
+                <div class="header-text">Escolha seu dia e horário</div>
+            </div>
+
             <div class="event">
                 <div class="event-left">
                     <div class="event-header">
                         <h2>Kyowa </h2>
                     </div>
-                    <div class="event-info">
+                    <div class="event-info"><br>
                         <p>4 HOUR PLAY TIME LIVE DJ</p>
                         <p>2 HIGH POWERED SPEAKERS</p>
                         <p>2 HOURS SETUP AND TEARDOWN</p>
@@ -301,7 +508,7 @@
                     <div class="event-header">
                         <h2>Dilma Coisas da Casa</h2>
                     </div>
-                    <div class="event-info">
+                    <div class="event-info"><br>
                         <p>UPLIGHTING</p>
                         <p>MC SERVICES</p>
                         <p>2 MICROPHONES</p>
@@ -324,7 +531,7 @@
                     <div class="event-header">
                         <h2>Pura Água e Ar</h2>
                     </div>
-                    <div class="event-info">
+                    <div class="event-info"><br>
                         <p>DANCE FLOOR LIGHTING</p>
                         <p>CUSTOM LOGO PROJECTION</p>
                         <p>2 ADDITIONAL HOURS</p>
@@ -347,7 +554,7 @@
                     <div class="event-header">
                         <h2>LL Vidros</h2>
                     </div>
-                    <div class="event-info">
+                    <div class="event-info"><br>
                         <p>DANCE FLOOR LIGHTING</p>
                         <p>CUSTOM LOGO PROJECTION</p>
                         <p>2 ADDITIONAL HOURS</p>
